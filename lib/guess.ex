@@ -1,4 +1,4 @@
-# defmodule é um modulo, o elixir trabalha com modulos
+#  defmodule é um modulo, o elixir trabalha com modulos
 # Tudo que fica entre o do e end está dentro do mesmo escopo
 # def -> Serve para criar uma função
 
@@ -26,7 +26,7 @@ defmodule Guess do
   def play(pick_number) do
     IO.gets("Play game: ")
     |> parse_input()
-    |> guess(pick_number)
+    |> guess(pick_number, 1)
   end
 
   def pick_number(level) do
@@ -35,20 +35,35 @@ defmodule Guess do
     |> Enum.random()
   end
 
-  def guess(user_number, pick_number) when user_number < pick_number do
+  def guess(user_number, pick_number, count) when user_number < pick_number do
     IO.gets("Too down, please try again: ")
     |> parse_input()
-    |> guess(pick_number)
+    |> guess(pick_number, count + 1)
   end
-  def guess(user_number, pick_number) when user_number > pick_number do
+  def guess(user_number, pick_number, count) when user_number > pick_number do
     IO.gets("Too High, please try again: ")
     |> parse_input()
-    |> guess(pick_number)
+    |> guess(pick_number, count + 1)
   end
-  def guess(user_number, pick_number) when user_number == pick_number do
-    IO.puts("Great")
+  def guess(_user_number, _pick_number, count)  do
+    IO.puts("You played #{count}")
+    compare(count)
   end
 
+  def compare(count) do
+    if count >= 7 do
+      IO.puts("Mais Sorte na proxima")
+    end
+    if count <=6 and count >= 5 do
+      IO.puts("You can best it")
+    end
+    if count >= 2 and count <=4 do
+      IO.puts("Very good")
+    end
+    if count == 1 do
+      IO.puts("Great!!!")
+    end
+  end
   def parse_input(:error) do
     IO.puts("Invalid level!!")
     run()
