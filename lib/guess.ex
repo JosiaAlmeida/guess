@@ -47,22 +47,13 @@ defmodule Guess do
   end
   def guess(_user_number, _pick_number, count)  do
     IO.puts("You played #{count}")
-    compare(count)
+    show_score(count)
   end
-
-  def compare(count) do
-    if count >= 7 do
-      IO.puts("Mais Sorte na proxima")
-    end
-    if count <=6 and count >= 5 do
-      IO.puts("You can best it")
-    end
-    if count >= 2 and count <=4 do
-      IO.puts("Very good")
-    end
-    if count == 1 do
-      IO.puts("Great!!!")
-    end
+  def show_score(score) do
+    # Map
+    {_, value} = %{1..1 => "Very great!!!", 2..4 => "Very Good", 5..6 => "You can do better than that"}
+    |> Enum.find(fn {range,_} -> Enum.member?(range, score) end)
+    IO.puts(value)
   end
   def parse_input(:error) do
     IO.puts("Invalid level!!")
