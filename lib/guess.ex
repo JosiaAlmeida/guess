@@ -14,18 +14,39 @@ defmodule Guess do
   end
 
   def run do
-    IO.puts("Let´s play guess the number")
+    IO.puts("Let's play guess the number")
 
     IO.gets("Pick a difficult level (1 - 3): ")
     |> parse_input()
     |> pick_number()
+    |> play()
     |> IO.inspect()
+  end
+
+  def play(pick_number) do
+    IO.gets("Play game: ")
+    |> parse_input()
+    |> guess(pick_number)
   end
 
   def pick_number(level) do
     level
     |> get_range()
     |> Enum.random()
+  end
+
+  def guess(user_number, pick_number) when user_number < pick_number do
+    IO.gets("Too down, please try again: ")
+    |> parse_input()
+    |> guess(pick_number)
+  end
+  def guess(user_number, pick_number) when user_number > pick_number do
+    IO.gets("Too High, please try again: ")
+    |> parse_input()
+    |> guess(pick_number)
+  end
+  def guess(user_number, pick_number) when user_number == pick_number do
+    IO.puts("Great")
   end
 
   def parse_input(:error) do
