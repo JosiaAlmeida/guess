@@ -49,6 +49,9 @@ defmodule Guess do
     IO.puts("You played #{count}")
     show_score(count)
   end
+  def show_score(count) when count > 6 do
+    IO.puts("Better luck in next time")
+  end
   def show_score(score) do
     # Map
     {_, value} = %{1..1 => "Very great!!!", 2..4 => "Very Good", 5..6 => "You can do better than that"}
